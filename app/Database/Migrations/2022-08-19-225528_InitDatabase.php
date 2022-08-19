@@ -9,6 +9,8 @@ class InitDatabase extends Migration
 {
     public function up()
     {
+        # Create database
+        $this->forge->createDatabase('cognito_users', true);
         # Creating table users
         $this->forge->addField([
             'id' => [
@@ -60,6 +62,14 @@ class InitDatabase extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '255',
             ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'default' => new RawSql('CURRENT_TIMESTAMP'),
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'default' => new RawSql('CURRENT_TIMESTAMP'),
+            ]
         ]);
 
         $this->forge->addKey('id', true);

@@ -16,3 +16,8 @@ Then we need to migrate the database:
 ```bash
 php spark migrate
 ```
+
+Then we need to seed the database:
+```bash
+php spark db:seed UserSeeder
+```
