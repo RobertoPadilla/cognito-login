@@ -22,6 +22,7 @@ class InitDatabase extends Migration
             'nickname' => [
                 'type' => 'VARCHAR',
                 'constraint' => '100',
+                'unique' => true,
             ],
             'email' => [
                 'type' => 'VARCHAR',
