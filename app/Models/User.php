@@ -28,4 +28,10 @@ class User extends Model
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
+    public function getByNickname($user): object | null
+    {
+        return $this->db->table($this->table)
+            ->where('nickname', $user)
+            ->get()->getRow();
+    }
 }

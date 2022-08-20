@@ -22,4 +22,12 @@ class Image extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
+    public function getByUser($userId)
+    {
+        $builder = $this->db->table($this->table)
+            ->where('user_id', $userId)
+            ->get()->getResultObject();
+        
+        return $builder;
+    }
 }
