@@ -27,9 +27,22 @@
             height: 100vh;
             width: 100vw;
         }
+        #header {
+            position: absolute;
+            top: 10px;
+            right: 100px;
+            color: gainsboro;
+            text-decoration: none;
+        }
+        #header:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
+    <?php if(session()->get('logged_in')) : ?>
+        <a id="header" href="<?= base_url('/logout')?>">logout</a>
+    <?php endif; ?>
     <div class="centered-container">
         <?= $this->renderSection('content') ?>
     </div>
