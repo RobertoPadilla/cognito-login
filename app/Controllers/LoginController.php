@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use ChromePhp;
 use App\Models\User;
 
 class LoginController extends BaseController
@@ -22,14 +23,24 @@ class LoginController extends BaseController
             throw new \Exception('User not found');
         }
 
-        if (!password_verify($postParams['password'], $user->password)) {
+        if (!password_verify($postParams['password'], $user->password) ) {
             throw new \Exception('Password is incorrect');
+        }
+        
+        $aws = new \App\Controllers\AWSController();
+        $results = $aws->authenticate($postParams['user'], $postParams['password']);
+
+        if ($results['@metadata']['statusCode'] != 200) {
+            throw new \Exception('Cognito authentication failed');
         }
 
         $session = session();
         $session->set([
             'user_id' => $user->id,
-            'logged_in' => true
+            'nickname' => $user->nickname,
+            'logged_in' => true,
+            'token' => $results['AuthenticationResult']['AccessToken'],
+            'id_token' => $results['AuthenticationResult']['IdToken'],
         ]);
 
         return redirect()->to('/gallery');

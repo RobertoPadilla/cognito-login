@@ -81,5 +81,7 @@ class InitDatabase extends Migration
     public function down()
     {
         $this->forge->dropDatabase('cognito_users');
+        $aws = new \App\Controllers\AWSController();
+        $aws->deleteUsers();
     }
 }

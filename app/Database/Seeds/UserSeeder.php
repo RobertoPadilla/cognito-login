@@ -13,11 +13,15 @@ class UserSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         for ($i = 0; $i < 10; $i++) {
+            $nickname = $faker->userName();
             $user->save([
-                'nickname' => $faker->userName(),
+                'nickname' => $nickname,
                 'email' => $faker->safeEmail(),
                 'password' => password_hash('password', PASSWORD_DEFAULT),
             ]);
+
+            $aws = new \App\Controllers\AWSController();
+            $aws->registrate($nickname, 'password');
         }
 
         # Runnning the ImageSeeder
